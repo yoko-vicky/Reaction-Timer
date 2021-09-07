@@ -1,7 +1,7 @@
 <template>
   <h1>Reaction Timer</h1>
   <button @click="startGame" :disabled="isPlaying">Play</button>
-  <Block :delay="delay" v-if="isPlaying" />
+  <Block :delay="delay" v-if="isPlaying" @restart="restartGame" />
 </template>
 
 <script>
@@ -18,9 +18,11 @@ export default {
   },
   methods: {
     startGame(){
-      this.delay = 2000 + Math.random() * 5000 // 2000 - 5000
+      this.delay = 2000 + Math.random() * 5000 // 2000 - 5000 ms
       this.isPlaying = true
-      // console.log(this.delay)
+    },
+    restartGame(){
+      this.isPlaying = false
     }
   }
 }
