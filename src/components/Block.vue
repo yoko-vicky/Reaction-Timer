@@ -1,8 +1,4 @@
 <template>
-  <div v-if="showResult">
-    <p>Time: 00,000!</p>
-    <button @click="restartGame">Restart Game!</button>
-  </div>
   <div class="block" v-if="showBlock" @click="stopTimer">
     click me
   </div>
@@ -14,7 +10,8 @@ export default {
   data(){
     return {
       showBlock: false,
-      showResult: false
+      timer: null,
+      reactionTime: 0,
     }
   },
   mounted(){
@@ -22,22 +19,18 @@ export default {
     setTimeout(() => {
       this.showBlock = true
       console.log(this.delay)
+      this.startTimer()
     }, this.delay);
   },
-  updated(){
-    console.log('Component updated!')
-    // setTimer
-  },
-  unmounted(){
-    console.log('Component unmounted!')
-  },
   methods: {
-    stopTimer(){
-      console.log('timer stop')
-      this.showResult = true
+    startTimer(){
+      this.timer = setInterval(() => {
+        this.reactionTime += 10
+      }, 10);
     },
-    restartGame(){
-      this.$emit('restart')
+    stopTimer(){
+      clearInterval(this.timer)
+      this.$emit('endGame', this.reactionTime)
     }
   }
 }
